@@ -61,6 +61,59 @@ public class bai3 {
         }
     }
     
+    public static void menu(int []arr){
+        Scanner sc = new Scanner(System.in);
+        int v,x;
+        System.out.println("\nMENU:");
+        System.out.println("1.Hiển thị");
+        System.out.println("2.Chèn mảng");
+        System.out.println("3.Xóa 1 phần tử");
+        System.out.println("4.Đảo ngược mảng");
+        System.out.println("5.Các số chia hết cho a[i]");
+        System.out.println("6.Exit");
+        int option ;
+        option= sc.nextInt();
+        switch(option){
+            case 1:{
+                System.out.print("\nMảng là: ");
+                xuat(arr);
+                menu(arr);
+                break;       
+            }
+            case 2:{
+                System.out.print("\nnhap v: ");
+                v=sc.nextInt();
+                System.out.print("\nnhap x: ");
+                x=sc.nextInt();
+                arr= chen(arr,v,x);
+                xuat(arr);
+                menu(arr);
+                break;
+            }
+            case 3:{
+                System.out.print("\nnhap v: ");
+                v=sc.nextInt();
+                arr=xoa(arr, v);
+                xuat(arr);
+                menu(arr);
+                break;
+            }
+            case 4:{
+                dao(arr);
+                menu(arr);
+                break;
+            }
+            case 5:{
+               mumbersFilter(arr); 
+               menu(arr);
+               break;
+            }
+            case 6:{
+                break;
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int x,v;
@@ -70,21 +123,7 @@ public class bai3 {
         for(int i=0;i<arr.length;i++){
             arr[i] = sc.nextInt();
         }
-        //xuat(arr);
-//        dao(arr);
-//        mumbersFilter(arr);
-
-//        System.out.print("\nnhap v: ");
-//        v=sc.nextInt();
-//        System.out.print("\nnhap x: ");
-//        x=sc.nextInt();
-//        arr= chen(arr,v,x);
-//        xuat(arr);
-
-
-
-           arr=xoa(arr, 4);
-           xuat(arr);
+        menu(arr);
   }
 
 }
