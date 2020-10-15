@@ -12,31 +12,33 @@ import java.util.Scanner;
  * @author Khac Huy
  */
 public class May {
-    private String Mamay;
-    private String Kieumay;
-    private String Tinhtrang;
+    private String maMay;
+    private String kieuMay;
+    private String tinhTrang;
 
     public May() {
     }
 
-    public May(String Mamay, String Kieumay, String Tinhtrang) {
-        this.Mamay = Mamay;
-        this.Kieumay = Kieumay;
-        this.Tinhtrang = Tinhtrang;
+    public May(String maMay, String kieuMay, String tinhTrang) {
+        this.maMay = maMay;
+        this.kieuMay = kieuMay;
+        this.tinhTrang = tinhTrang;
     }
+
+   
     
     public void nhap(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Nhap ma may:"); 
-        Mamay = sc.nextLine();
+        maMay = sc.nextLine();
         System.out.println("Nhap kieu may:");
-        Kieumay = sc.nextLine();
+        kieuMay = sc.nextLine();
         System.out.println("Nhap tinh trang:");
-        Tinhtrang = sc.nextLine();
+        tinhTrang = sc.nextLine();
     }
     public void xuat(){
-        System.out.println("Ma may:" + Mamay);
-        System.out.println("Kieu may:" + Kieumay);
-        System.out.println("Tinh trang may:" + Tinhtrang);
+        System.out.println("Ma may:" + maMay);
+        System.out.println("Kieu may:" + kieuMay);
+        System.out.println("Tinh trang may:" + tinhTrang);
     }
 }

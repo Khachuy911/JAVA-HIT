@@ -39,7 +39,7 @@ public class PhongMay {
         tenPhong = sc.nextLine();
         System.out.println("Nhap dien tich:");
         dienTich = sc.nextLine();
-        System.out.println("Nhap so luong may(n)");
+        System.out.println("Nhap so luong may(n):");
         n = sc.nextInt();
         x = new QuanLy();
         x.nhap();
