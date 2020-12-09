@@ -367,7 +367,7 @@ public class runMain {
                 break;
             }
             case 7: {
-                System.exit(0);
+                menuMain(list);
             }
             default: {
                 System.out.println("Lựa chọn sai !");

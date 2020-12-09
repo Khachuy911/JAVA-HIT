@@ -1,3 +1,7 @@
-1111|the flu|kinh di|japan|12/12/2020|6h30|English|20000|120
-1112|the flu|kinh di|japan|12/12/2020|6h30|English|20000|120
-1113|the flu|kinh di|japan|12/12/2020|6h30|English|20000|120
+1111|The Flu|Horro|Japan|12/12/2020|12h30-16h|English|20000|120
+1112|The Flash|Action|America|12/12/2020|6h30-22h|English|20000|120
+1113|Dragon boy|Cartoon|China|12/12/2020|6h30-21h20|English|20000|120
+1114|Son|Cartoon|America|12/12/2020|16h30-20h30|English|20000|120
+1115|Boy|Cartoon|China|12/12/2020|6h30|English|20000|120
+1116|Phim gi cung co|Cartoon|China|12/12/2020|6h30|English|20000|120
+1117|Run man|Document|Vietnam|12/12/2020|6h30|English|20000|120
