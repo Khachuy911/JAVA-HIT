@@ -113,8 +113,7 @@ public class Film {
         this.filmStatus = filmStatus;
     }
 
-    public void InputFilm(){
-        
+    public void InputFilm(){      
         Scanner sc = new Scanner(System.in);
         System.out.println("Nhập lại id phim: ");
         idFilm = sc.nextInt();
@@ -130,7 +129,6 @@ public class Film {
         System.out.print("Nhập giờ chiếu: ");
         time = sc.nextLine();
         System.out.print("Nhập ngôn ngữ: ");
-        sc.nextLine();
         language = sc.nextLine();
         System.out.print("Nhập giá tiền: ");
         price = sc.nextLong();

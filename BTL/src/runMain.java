@@ -25,11 +25,14 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
  */
 public class runMain {
 
+    
     public static Film convert(String data) {
         String[] a = data.split("\\|");
-        Film phim = new Film(Integer.parseInt(a[0]), a[1], a[2], a[3], a[4], a[5], a[6], Long.parseLong(a[7]), a[8]);
-        return phim;
+        Film film = new Film(Integer.parseInt(a[0]), a[1], a[2], a[3], a[4], a[5], a[6],Long.parseLong(a[7]), a[8]);
+        return film;
     }
+    
+   
 
     public static List<Film> readFile(String fileName) {
         List<Film> list = new ArrayList<>();
@@ -37,8 +40,8 @@ public class runMain {
             Scanner sc = new Scanner(Paths.get(fileName));
             while (sc.hasNext()) {
                 String readData = sc.nextLine();
-                list.add(convert(readData));
-
+                Film film = convert(readData);
+                list.add(film);
             }
         } catch (IOException ex) {
             Logger.getLogger(runMain.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,7 +227,7 @@ public class runMain {
         int count = 0;
         for (int j = 0; j < list.size(); j++) {
             if (id == list.get(j).getIdFilm()) {
-                ct1.InputCustomer();
+                     ct1.InputCustomer();                
                 for (int i = 0; i < ct1.getIdAccount().length(); i++) {
                     if (ct1.getIdAccount().charAt(0) == 'V' || ct1.getIdAccount().charAt(0) == 'v') {
                         count++;
@@ -245,13 +248,10 @@ public class runMain {
                     System.out.println("Thành tiền: " + sum);
                 }
                 System.out.println("CẢM ƠN QUÝ KHÁCH >.<");
-
             }
-            if (id == 0) {
-                menuCustomer(list);
-            }
-        }
+            
 
+    }
     }
 
     public static void SortByName(List<Film> list) {
