@@ -1,12 +1,5 @@
 
-Bui Tat Trung V123
-Bui Tat Trung V123
-Bui Tat Trung V123
-null null
-null null
-null null
-null null
-null null
-null null
-null null
-null null
+
+[Customer{idAccount=V123| nameAccount=Nguyen Khac Huy| NameFilm=The Flu}]
+[Customer{idAccount=911| nameAccount=Nguyen Thi Huyen| NameFilm=Run man}]
+

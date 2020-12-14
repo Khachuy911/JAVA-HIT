@@ -25,14 +25,17 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
  */
 public class runMain {
 
-    
     public static Film convert(String data) {
         String[] a = data.split("\\|");
-        Film film = new Film(Integer.parseInt(a[0]), a[1], a[2], a[3], a[4], a[5], a[6],Long.parseLong(a[7]), a[8]);
+        Film film = new Film(Integer.parseInt(a[0]), a[1], a[2], a[3], a[4], a[5], a[6], Long.parseLong(a[7]), a[8]);
         return film;
     }
     
-   
+    public static Staff convertStaff(String data) {
+        String[] a = data.split("\\|");
+        Staff staff = new Staff(a[0]);
+        return staff;
+    }
 
     public static List<Film> readFile(String fileName) {
         List<Film> list = new ArrayList<>();
@@ -48,10 +51,25 @@ public class runMain {
         }
         return list;
     }
-
-    public static void writeFile(List<Film> list) {
+    
+    public static List<Staff> readStaff(String fileName) {
+        List<Staff> list = new ArrayList<>();
         try {
-            FileWriter filewriter = new FileWriter("dataFilm.txt", false);
+            Scanner sc = new Scanner(Paths.get(fileName));
+            while (sc.hasNext()) {
+                String readData = sc.nextLine();
+                Staff staff = convertStaff(readData);
+                list.add(staff);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(runMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public static void writeFile(List<Film> list, String nameFile) {
+        try {
+            FileWriter filewriter = new FileWriter(nameFile, false);
             BufferedWriter bufferedWriter = new BufferedWriter(filewriter);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
             for (int i = 0; i < list.size(); i++) {
@@ -82,27 +100,58 @@ public class runMain {
         return true;
     }
 
-    public static boolean checkIDStaff() {
+    public static void inputIdStaff(){
+        List<Staff>list = new ArrayList<>();
+        Staff st1 = new Staff();
+        st1.InputStaff();
+        list.add(st1);
+        try {
+            FileWriter fileWriter = new FileWriter("dataStaff.txt",true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(bufferedWriter);
+            for (int i = 0; i < list.size(); i++) {
+                printWriter.println(list.get(i).getIdStaff());              
+            }           
+            printWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(runMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static boolean checkIDStaff() {      
+        List<Staff> staff = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
-        Staff nv1 = new Staff();
-        nv1.InputStaff();
-        for (int i = 0; i < nv1.getIdStaff().length(); i++) {
-            if (nv1.getIdStaff().charAt(0) == 'N' || nv1.getIdStaff().charAt(0) == 'n') {
+        String readData;
+        System.out.println("Input Id Customer: ");
+        String id = sc.nextLine();
+        staff = readStaff("dataStaff.txt");      
+        for(int i=0;i<staff.size();i++){          
+            if(id.compareTo(staff.get(i).getIdStaff())==0){
                 return true;
             }
         }
-        return false;
-
+          return false;
+} 
+    
+    public static void showIdStaff(){
+        List<Staff> staff = new ArrayList<>();
+        staff = readStaff("dataStaff.txt");
+        System.out.println("Id Staff: ");
+        for(int i=0;i<staff.size();i++){
+            System.out.println(staff.get(i).getIdStaff()); 
+        }
     }
-
+    
     public static void AddFilm(List<Film> list) {
         Scanner sc = new Scanner(System.in);
         int n;
-        System.out.println("Nhập số lượng phim muốn thêm: ");
+        System.out.println("Numbers of Film: ");
         n = sc.nextInt();
         List<Film> CkeckList = new ArrayList<>();
         CkeckList = readFile("dataFilm.txt");
-        System.out.println("Kiem tra id Film: ");
+        System.out.println("Check id Film: ");
         int id = sc.nextInt();
         if (checkId(CkeckList, id)) {
             for (int i = 0; i < n; i++) {
@@ -111,7 +160,7 @@ public class runMain {
                 list.add(phim);
             }
         } else {
-            System.out.println("Id đã tồn tại !");
+            System.out.println("Id Error !");
             menuStaff(list);
         }
         try {
@@ -137,9 +186,9 @@ public class runMain {
         }
     }
 
-    public static void ShowFilm(List<Film> list) {
+    public static void Show(List<Film> list,String nameFile) {
         try {
-            File file = new File("dataFilm.txt");
+            File file = new File(nameFile);
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 String conten = sc.nextLine();
@@ -152,7 +201,7 @@ public class runMain {
 
     public static void deleteFilm(List<Film> list) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập id phim muốn xóa: ");
+        System.out.println("Input id film want delete: ");
         int n = sc.nextInt();
         list = readFile("dataFilm.txt");
         for (int i = 0; i < list.size(); i++) {
@@ -160,21 +209,20 @@ public class runMain {
                 list.remove(list.get(i));
             }
         }
-        writeFile(list);
-
+        writeFile(list,"dataFilm.txt");
     }
 
     public static void updateFilm(List<Film> list) {
         Scanner sc = new Scanner(System.in);
         list = readFile("dataFilm.txt");
-        System.out.println("Nhập id phim muốn cập nhật: ");
+        System.out.println("Input id film want update: ");
         int id = sc.nextInt();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getIdFilm() == id) {
                 list.get(i).InputFilm();
             }
         }
-        writeFile(list);
+        writeFile(list,"dataFilm.txt");
     }
 
     public static void menuStaff(List<Film> list) {
@@ -184,11 +232,14 @@ public class runMain {
         System.out.println("2.Add Film");
         System.out.println("3.Delete Film");
         System.out.println("4.Update Film");
-        System.out.println("5.Exit");
+        System.out.println("5.Show list customer");
+        System.out.println("6.Add Id Staff");
+        System.out.println("7.Show id Staff");
+        System.out.println("8.Exit");
         int n1 = sc.nextInt();
         switch (n1) {
             case 1: {
-                ShowFilm(list);
+                Show(list,"dataFilm.txt");
                 menuStaff(list);
                 break;
             }
@@ -207,7 +258,22 @@ public class runMain {
                 menuStaff(list);
                 break;
             }
-            case 5: {
+            case 5:{
+                Show(list,"dataCustomer.txt");
+                menuStaff(list);
+                break;
+            }
+            case 6:{
+                inputIdStaff();
+                menuStaff(list);
+                break;
+            }
+            case 7:{
+                showIdStaff();
+                menuStaff(list);
+                break;
+            }
+            case 8: {
                 menuMain(list);
             }
             default: {
@@ -217,41 +283,55 @@ public class runMain {
         }
     }
 
-    public static void Bill(List<Film> list) {
+    public static void Bill(List<Film> list, int sale) {
         Scanner sc = new Scanner(System.in);
         Customer ct1 = new Customer();
-        System.out.println("Nhập ID phim muốn đặt (0 để exit): ");
+        System.out.println("Input ID film want order (0 exit): ");
         int id = sc.nextInt();
         list = readFile("dataFilm.txt");
         double sum = 0;
         int count = 0;
+        List<Customer> listCus = new ArrayList<>();
         for (int j = 0; j < list.size(); j++) {
             if (id == list.get(j).getIdFilm()) {
-                     ct1.InputCustomer();                
+                ct1.InputCustomer();
+                listCus.add(ct1);
                 for (int i = 0; i < ct1.getIdAccount().length(); i++) {
                     if (ct1.getIdAccount().charAt(0) == 'V' || ct1.getIdAccount().charAt(0) == 'v') {
                         count++;
-                        sum = list.get(j).getPrice() - (list.get(j).getPrice() * 0.1);
+                        sale /= 100; 
+                        sum = list.get(j).getPrice() - (list.get(j).getPrice() * sale);
                     } else {
                         sum = list.get(j).getPrice();
                     }
                 }
                 System.out.println("***********");
-                System.out.println("* HÓA ĐƠN *");
+                System.out.println("* BILL *");
                 System.out.println("***********");
-                System.out.println("ID phim: " + list.get(j).getIdFilm());
+                System.out.println("ID film: " + list.get(j).getIdFilm());
                 if (count > 0) {
-                    System.out.println("ID tài khoản(VIP): " + ct1.getIdAccount());
-                    System.out.println("Thành tiền(Đã giảm 10%): " + sum);
+                    System.out.println("ID Account(VIP): " + ct1.getIdAccount());
+                    System.out.println("Money(10%): " + sum);
                 } else {
-                    System.out.println("ID tài khoản(Nomal): " + ct1.getIdAccount());
-                    System.out.println("Thành tiền: " + sum);
+                    System.out.println("ID Account(Nomal): " + ct1.getIdAccount());
+                    System.out.println("Money: " + sum);
                 }
-                System.out.println("CẢM ƠN QUÝ KHÁCH >.<");
+                
+                System.out.println("Thank you Very much >.<");
             }
-            
 
-    }
+        }
+        try {
+            FileWriter fileWriter = new FileWriter("dataCustomer.txt",true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(bufferedWriter);
+            printWriter.println(listCus);
+            printWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(runMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void SortByName(List<Film> list) {
@@ -274,16 +354,16 @@ public class runMain {
         Scanner sc = new Scanner(System.in);
         int count = 0;
         list = readFile("dataFilm.txt");
-        System.out.println("Nhập thể loại: ");
+        System.out.println("Input category: ");
         String tl = sc.nextLine();
         for (int i = 0; i < list.size(); i++) {
-            if (tl.compareTo(list.get(i).getCategory())==0) {
+            if (tl.compareTo(list.get(i).getCategory()) == 0) {
                 System.out.println(list.get(i));
                 count++;
             }
         }
         if (count == 0) {
-            System.out.println("Không có thể loại phim này !");
+            System.out.println("Haven't category this film !");
         }
     }
 
@@ -291,37 +371,37 @@ public class runMain {
         Scanner sc = new Scanner(System.in);
         int count = 0;
         list = readFile("dataFilm.txt");
-        System.out.println("Nhập Quốc gia của phim: ");
+        System.out.println("Input National of film: ");
         String qg = sc.nextLine();
         for (int i = 0; i < list.size(); i++) {
-            if (qg.compareTo(list.get(i).getNationalProduct())==0) {
+            if (qg.compareTo(list.get(i).getNationalProduct()) == 0) {
                 System.out.println(list.get(i));
                 count++;
             }
         }
         if (count == 0) {
-            System.out.println("Không có thể loại phim này !");
+            System.out.println("Haven't National of this film");
         }
     }
 
-    public static void SearchFilm(List<Film> list){
+    public static void SearchFilm(List<Film> list) {
         Scanner sc = new Scanner(System.in);
-        int count=0;
-        System.out.println("Nhập tên phim: ");
+        int count = 0;
+        System.out.println("Input Film: ");
         String name = sc.nextLine();
-        System.out.println("Nhập quốc gia của phim: ");
+        System.out.println("Input national of film: ");
         String qg = sc.nextLine();
         for (int i = 0; i < list.size(); i++) {
-            if(name.compareTo(list.get(i).getFilmName())==0 && qg.compareTo(list.get(i).getNationalProduct())==0){
+            if (name.compareTo(list.get(i).getFilmName()) == 0 && qg.compareTo(list.get(i).getNationalProduct()) == 0) {
                 count++;
                 System.out.println(list.get(i));
             }
         }
-        if(count==0){
-            System.out.println("Không tồn tại phim trong kho !");
+        if (count == 0) {
+            System.out.println("Don't have film in repo !");
         }
     }
-    
+
     public static void menuCustomer(List<Film> list) {
         Scanner sc = new Scanner(System.in);
         System.out.println("**Welcom to the Cinema*****");
@@ -336,34 +416,34 @@ public class runMain {
         int option = sc.nextInt();
         switch (option) {
             case 1: {
-                ShowFilm(list);
-                Bill(list);
+                Show(list,"dataFilm.txt");
+                Bill(list,10);
                 break;
             }
             case 2: {
                 SortByName(list);
-                Bill(list);
+                Bill(list,10);
 
                 break;
             }
             case 3: {
                 SortByMoney(list);
-                Bill(list);
+                Bill(list,10);
                 break;
             }
             case 4: {
                 filterByCategory(list);
-                Bill(list);
+                Bill(list,10);
                 break;
             }
             case 5: {
                 filterByNational(list);
-                Bill(list);
+                Bill(list,10);
                 break;
             }
-            case 6:{
+            case 6: {
                 SearchFilm(list);
-                Bill(list);
+                Bill(list,10);
                 break;
             }
             case 7: {
@@ -411,6 +491,5 @@ public class runMain {
     public static void main(String[] args) {
         List<Film> list = new ArrayList<>();
         menuMain(list);
-
     }
 }

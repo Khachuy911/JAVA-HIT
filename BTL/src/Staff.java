@@ -10,14 +10,13 @@
  */
 import java.util.Scanner;
 
-public class Staff extends Person {
+public class Staff{
     private String idStaff;
 
     public Staff() {
     }
 
-    public Staff(String name, int age, String address, String idStaff) {
-        super(name, age, address);
+    public Staff(String idStaff) {
         this.idStaff = idStaff;
     }
 
@@ -37,9 +36,7 @@ public class Staff extends Person {
 
     @Override
     public String toString() {
-        return "Staff{" + super.toString() +
-                "idStaff='" + idStaff + '\'' +
-                '}';
+        return "Staff{" + "idStaff=" + idStaff +"|"+'}';
     }
 }
 

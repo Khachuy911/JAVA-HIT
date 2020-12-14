@@ -57,15 +57,6 @@ public class Person {
         sc.nextLine();
         address = sc.nextLine();
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }
 
 
